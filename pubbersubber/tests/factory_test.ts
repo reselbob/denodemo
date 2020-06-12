@@ -71,8 +71,10 @@ Deno.test({
         const config = new Ampq.SubscriberConfigImpl({
             backingService: BackingService.AMPQ,
             source: TestUtils.getRandomString(10),
-            queueName: TestUtils.getRandomString(10)
+            queueName: TestUtils.getRandomString(10),
+            routingKey: TestUtils.getRandomString(10)
         } as ISubscriberConfig)
+
 
         const subscriber = await PubberSubberFactory.getSubscriber(config);
         assertEquals(subscriber instanceof Ampq.Subscriber, true);

@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Deno",
+        "type": "node",
+        "request": "launch",
+        "cwd": "${workspaceFolder}",
+        "runtimeExecutable": "deno",
+        "runtimeArgs": ["test", "--inspect-brk", "-A", "./pubbersubber/tests/factory_test.ts"],
+        "port": 9229
+      }
+    ]
+  }
