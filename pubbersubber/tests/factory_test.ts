@@ -50,7 +50,7 @@ Deno.test({
     ignore: false,
     async fn() {
 
-        const config = new Redis.PublisherConfigImpl({
+        const config = new Ampq.PublisherConfigImpl({
             backingService: BackingService.AMPQ,
             source: TestUtils.getRandomString(10)
         })
@@ -74,7 +74,6 @@ Deno.test({
             queueName: TestUtils.getRandomString(10),
             routingKey: TestUtils.getRandomString(10)
         } as ISubscriberConfig)
-
 
         const subscriber = await PubberSubberFactory.getSubscriber(config);
         assertEquals(subscriber instanceof Ampq.Subscriber, true);

@@ -7,7 +7,7 @@
         "request": "launch",
         "cwd": "${workspaceFolder}",
         "runtimeExecutable": "deno",
-        "runtimeArgs": ["test", "--inspect-brk", "-A", "./pubbersubber/tests/factory_test.ts"],
+        "runtimeArgs": ["test", "--inspect-brk", "-A", "./pubbersubber/tests/connection_test.ts"],
         "port": 9229
       }
     ]

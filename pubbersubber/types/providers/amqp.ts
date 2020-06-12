@@ -11,20 +11,13 @@ export namespace Ampq {
     }
 
     export class PublisherConfigImpl extends PubberSubberConfigBase {
-        constructor(config: SubscriberConfigImpl) {
-            super(config as IPubberSubberConfigBase);
+        constructor(config: IPublisherConfig) {
+            super(config);
         }
 
 
         async validate(): Promise<PubberSubberStatus> {
             Utils.validateCommonPropertiesSync(this);
-            /*
-            this.port = this.port || 5679;
-            this.host = this.host || 'localhost';
-            this.password = this.password || 'guest';
-            this.userName = this.userName || 'guest'
-            if (this.source) throw new Error('No source defined')
-            */
             return PubberSubberStatus.OK;
         }
     }
@@ -37,17 +30,13 @@ export namespace Ampq {
             this.connection = null;
             this.channel = null;
         }
-        /*
-        public InitializeAsync = async (config: PublisherConfigImpl) => {
-            config.validate();
-        }
-        */
         async publish(message: string): Promise<PubberSubberStatus> {
-            const url = `amqp://${this.userName}:${this.password}@${this.host}:${this.port}`
+            const uri = `amqp://${this.userName}:${this.password}@${this.host}:${this.port}`
             if(!this.connection){
-                this.connection = await connect(url);
+                this.connection = await connect(uri);// TODO Fix the bad uri thing
                 this.channel = await this.connection.openChannel();
-                await this.channel.declareExchange({exchange: this.source, type: "fanout"});
+                await this.channel.declareExchange({exchange: this.source, type: "fanout"}); 
+
             }
             if(this.channel){
                 await this.channel.publish(
@@ -69,7 +58,6 @@ export namespace Ampq {
 
     export class SubscriberConfigImpl extends PubberSubberConfigBase
         implements ISubscriberConfig {
-        queueName?: string;
         constructor(config: ISubscriberConfig){
             super(config);
             //this.queueName = config.queueName;
@@ -99,9 +87,9 @@ export namespace Ampq {
         }
 
         async subscribe(handler: Function): Promise<PubberSubberStatus> {
-            const url = `amqp://${this.userName}:${this.password}@${this.host}:${this.port}`
+            const uri = `amqp://${this.userName}:${this.password}@${this.host}:${this.port}`
             if(!this.connection){
-                this.connection = await connect(url);
+                this.connection = await connect(uri);
                 this.channel = await this.connection.openChannel();
                 this.channel.declareQueue({queue: this.queueName, autoDelete: false });
 
@@ -137,7 +125,7 @@ export namespace Ampq {
     class Utils {
         static validateCommonPropertiesSync(source: any): void {
             if(!source.source) throw new Error('No source defined');
-            source.port = source.port || 5679;
+            source.port = source.port || 5672;
             source.host = source.host || 'localhost';
             source.password = source.password || 'guest';
             source.userName = source.userName || 'guest'
