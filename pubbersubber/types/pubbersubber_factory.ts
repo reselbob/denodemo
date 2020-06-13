@@ -1,20 +1,20 @@
 import { IPublisherConfig, ISubscriberConfig } from "./mod.ts";
 import { BackingService } from "./backing_service.ts";
-import { Ampq } from "./providers/amqp.ts";
-import { Redis } from "./providers/redis.ts";
+import { PSAmpq } from "./providers/amqp.ts";
+import { PSRedis } from "./providers/redis.ts";
 import { IPublisher, ISubscriber } from "./pubbersubber.ts";
 
 export class PubberSubberFactory {
   constructor() {
   }
-  static async getPublisher(config: Ampq.PublisherConfigImpl): Promise<IPublisher> {
+  static async getPublisher(config: PSAmpq.PublisherConfigImpl): Promise<IPublisher> {
     let publisher: IPublisher;
     switch (config.backingService) {
       case BackingService.AMPQ:
-        publisher = new Ampq.Publisher(config);
+        publisher = new PSAmpq.Publisher(config);
         break;
       case BackingService.REDIS:
-        publisher = new Redis.Publisher(config);
+        publisher = new PSRedis.Publisher(config);
         break;
       default:
         throw new Error(
@@ -29,10 +29,10 @@ export class PubberSubberFactory {
     let subscriber: ISubscriber;
     switch (config.backingService) {
       case BackingService.AMPQ:
-        subscriber = new Ampq.Subscriber(config as Ampq.SubscriberConfigImpl);
+        subscriber = new PSAmpq.Subscriber(config as PSAmpq.SubscriberConfigImpl);
         break;
       case BackingService.REDIS:
-        subscriber = new Redis.Subscriber(config as Redis.SubscriberConfigImpl);
+        subscriber = new PSRedis.Subscriber(config as PSRedis.SubscriberConfigImpl);
         break;
       default:
         throw new Error(

@@ -6,7 +6,7 @@ import {Nullable} from "./../mod.ts";
 
 import {connect, AmqpConnection, AmqpChannel} from "https://deno.land/x/amqp/mod.ts";
 
-export namespace Ampq {
+export namespace PSAmpq {
     export interface IPublisherConfig extends IPubberSubberConfigBase {
     }
 
@@ -14,7 +14,6 @@ export namespace Ampq {
         constructor(config: IPublisherConfig) {
             super(config);
         }
-
 
         async validate(): Promise<PubberSubberStatus> {
             Utils.validateCommonPropertiesSync(this);
@@ -31,13 +30,6 @@ export namespace Ampq {
             this.channel = null;
         }
         async publish(message: string): Promise<PubberSubberStatus> {
-            const uri = `amqp://${this.userName}:${this.password}@${this.host}:${this.port}`
-            if(!this.connection){
-                this.connection = await connect(uri);// TODO Fix the bad uri thing
-                this.channel = await this.connection.openChannel();
-                await this.channel.declareExchange({exchange: this.source, type: "fanout"}); 
-
-            }
             if(this.channel){
                 await this.channel.publish(
                     {exchange:this.source},
@@ -47,7 +39,15 @@ export namespace Ampq {
             }
             return PubberSubberStatus.OK
         }
-
+        async connect(){
+            const uri = `amqp://${this.userName}:${this.password}@${this.host}:${this.port}`
+            if(!this.connection){
+                this.connection = await connect(uri);
+                this.channel = await this.connection.openChannel();
+                await this.channel.declareExchange({exchange: this.source, type: "fanout"}); 
+            }
+          return PubberSubberStatus.OK;
+        }
         async disconnect(): Promise<PubberSubberStatus> {
             if (this.connection) {
                 await this.connection.close()
@@ -60,7 +60,7 @@ export namespace Ampq {
         implements ISubscriberConfig {
         constructor(config: ISubscriberConfig){
             super(config);
-            //this.queueName = config.queueName;
+            this.queueName = config.queueName;
             
         }
 
@@ -86,19 +86,22 @@ export namespace Ampq {
             this.channel = null;
         }
 
-        async subscribe(handler: Function): Promise<PubberSubberStatus> {
-            const uri = `amqp://${this.userName}:${this.password}@${this.host}:${this.port}`
+        async connect(){
+            const uri = `amqp://${this.userName}:${this.password}@${this.host}:${this.port}`;
             if(!this.connection){
                 this.connection = await connect(uri);
                 this.channel = await this.connection.openChannel();
                 this.channel.declareQueue({queue: this.queueName, autoDelete: false });
-
                 //bind it to the exchange
-                try{await  this.channel.bindQueue({ exchange: this.source, queue: this.queueName, routingKey: this.routingKey });
-                }catch(err) {
-                    throw(err);
-                }
-                await  this.channel.consume(
+                await this.channel.bindQueue({ exchange: this.source, queue: this.queueName, routingKey: this.routingKey}); 
+            }
+            return PubberSubberStatus.OK;
+            
+        }
+
+        async subscribe(handler: Function): Promise<PubberSubberStatus> {
+            if(!this.channel) throw new Error('Channel not initialized');  
+            await  this.channel.consume(
                     {queue: this.queueName},
                     async (args, props, data) => {
                         await handler(args, props, data);
@@ -109,8 +112,6 @@ export namespace Ampq {
                         }
                     },
                 );
-                return PubberSubberStatus.OK;
-            }
             return PubberSubberStatus.OK;
         }
 
@@ -128,7 +129,7 @@ export namespace Ampq {
             source.port = source.port || 5672;
             source.host = source.host || 'localhost';
             source.password = source.password || 'guest';
-            source.userName = source.userName || 'guest'
+            source.userName = source.userName || 'guest';
         }
     }
 }

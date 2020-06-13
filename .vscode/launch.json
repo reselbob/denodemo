@@ -7,6 +7,7 @@
         "request": "launch",
         "cwd": "${workspaceFolder}",
         "runtimeExecutable": "deno",
+        "outputCapture": "std",
         "runtimeArgs": ["test", "--inspect-brk", "-A", "./pubbersubber/tests/connection_test.ts"],
         "port": 9229
       }

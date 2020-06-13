@@ -4,21 +4,21 @@ import { TestUtils } from './mod.ts';
 import {} from '../types/mod.ts'
 import {PubberSubberFactory, IPublisherConfig, ISubscriberConfig} from '../types/mod.ts'
 import {BackingService} from '../types/mod.ts'
-import { Ampq } from "../types/providers/amqp.ts";
-import { Redis } from "../types/providers/redis.ts";
+import { PSAmpq } from "../types/providers/amqp.ts";
+import { PSRedis } from "../types/providers/redis.ts";
 
 Deno.test({
     name: "Can Init Redis Publisher from Factory",
     ignore: false,
     async fn() {
 
-        const config = new Redis.PublisherConfigImpl({
+        const config = new PSRedis.PublisherConfigImpl({
             backingService: BackingService.REDIS,
             source: TestUtils.getRandomString(10)
         })
 
         const publisher = await PubberSubberFactory.getPublisher(config);
-        assertEquals(publisher instanceof Redis.Publisher, true);
+        assertEquals(publisher instanceof PSRedis.Publisher, true);
     },
     sanitizeResources: false,
     sanitizeOps: false,
@@ -29,14 +29,14 @@ Deno.test({
     ignore: false,
     async fn() {
 
-        const config = new Redis.SubscriberConfigImpl({
+        const config = new PSRedis.SubscriberConfigImpl({
             backingService: BackingService.REDIS,
             source: TestUtils.getRandomString(10),
             queueName: TestUtils.getRandomString(10)
         } as ISubscriberConfig)
 
         const subscriber = await PubberSubberFactory.getSubscriber(config);
-        assertEquals(subscriber instanceof Redis.Subscriber, true);
+        assertEquals(subscriber instanceof PSRedis.Subscriber, true);
     },
     sanitizeResources: false,
     sanitizeOps: false,
@@ -50,13 +50,13 @@ Deno.test({
     ignore: false,
     async fn() {
 
-        const config = new Ampq.PublisherConfigImpl({
+        const config = new PSAmpq.PublisherConfigImpl({
             backingService: BackingService.AMPQ,
             source: TestUtils.getRandomString(10)
         })
 
         const publisher = await PubberSubberFactory.getPublisher(config);
-        assertEquals(publisher instanceof Ampq.Publisher, true);
+        assertEquals(publisher instanceof PSAmpq.Publisher, true);
 
     },
     sanitizeResources: false,
@@ -68,7 +68,7 @@ Deno.test({
     ignore: false,
     async fn() {
 
-        const config = new Ampq.SubscriberConfigImpl({
+        const config = new PSAmpq.SubscriberConfigImpl({
             backingService: BackingService.AMPQ,
             source: TestUtils.getRandomString(10),
             queueName: TestUtils.getRandomString(10),
@@ -76,7 +76,7 @@ Deno.test({
         } as ISubscriberConfig)
 
         const subscriber = await PubberSubberFactory.getSubscriber(config);
-        assertEquals(subscriber instanceof Ampq.Subscriber, true);
+        assertEquals(subscriber instanceof PSAmpq.Subscriber, true);
     },
     sanitizeResources: false,
     sanitizeOps: false,

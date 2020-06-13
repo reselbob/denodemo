@@ -46,6 +46,7 @@ export enum PubberSubberStatus{
 }
 
 export interface IPubberSubber{
+    connection: any;
     backingService: BackingService
     source: string;
     id?: string;
@@ -55,6 +56,7 @@ export interface IPubberSubber{
     port?: number;
     userName?: string;
     password?: string;  
+    connect(): Promise<PubberSubberStatus>;
     disconnect(): Promise<PubberSubberStatus>;
 }
 
@@ -67,7 +69,8 @@ export abstract class PubberSubberBase implements IPubberSubber{
     host?: string;
     port?: number;
     userName?: string;
-    password?: string;  
+    password?: string;
+    connection: any
     constructor(config: IPubberSubberConfigBase) { 
         this.id = v4.generate();
         this.backingService = config.backingService
@@ -80,6 +83,7 @@ export abstract class PubberSubberBase implements IPubberSubber{
         this.password = config.password;
     }
 
+    async abstract connect(): Promise<PubberSubberStatus>;
     async abstract disconnect(): Promise<PubberSubberStatus>;
 
 }
