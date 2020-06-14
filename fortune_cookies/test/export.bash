@@ -1,0 +1,1 @@
+export DATA_DIR="$HOME/Documents/source-tree/denodemo/fortune_cookies/data/"

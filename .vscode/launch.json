@@ -1,15 +1,23 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "name": "Deno",
-        "type": "node",
-        "request": "launch",
-        "cwd": "${workspaceFolder}",
-        "runtimeExecutable": "deno",
-        "outputCapture": "std",
-        "runtimeArgs": ["test", "--inspect-brk", "-A", "./pubbersubber/tests/connection_test.ts"],
-        "port": 9229
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Deno",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "outputCapture": "std",
+      "runtimeArgs": [
+        "test",
+        "--inspect-brk",
+        "-A",
+        "./fortune_cookies/test/data_access_test.ts"
+      ],
+      "port": 9229,
+      "env": {
+        "DATA_DIR": "${workspaceFolder}/denodemo/fortune_cookies/data/"
       }
-    ]
-  }
+    }
+  ]
+}
