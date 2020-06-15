@@ -1,9 +1,10 @@
-import { ICustomer } from './../interface.ts';
-import {readFileStrSync} from "https://deno.land/std/fs/read_file_str.ts"
-import {readJson} from "https://deno.land/std/fs/read_json.ts"
-import {writeJson} from "https://deno.land/std/fs/write_json.ts"
-import {EOL} from "https://deno.land/std/fs/eol.ts"
-import {ensureFile} from "https://deno.land/std/fs/ensure_file.ts"
+import { Nullable} from '../nullable.ts';
+import { ICustomer, ISenderSearchOptions } from './../interface.ts';
+import {readFileStrSync} from "https://deno.land/std/fs/read_file_str.ts";
+import {readJson} from "https://deno.land/std/fs/read_json.ts";
+import {writeJson} from "https://deno.land/std/fs/write_json.ts";
+import {EOL} from "https://deno.land/std/fs/eol.ts";
+import {ensureFile} from "https://deno.land/std/fs/ensure_file.ts";
 import {v4} from "https://deno.land/std/uuid/mod.ts";
 
 const customerFileName = "customer.json";
@@ -50,6 +51,19 @@ export class DataManager{
 
     public static async getCustomer(id:string) : Promise<ICustomer> {
         return customerData.find(c => c.id === id) as ICustomer
+    }
+
+    public static async searchCustomer(options:ISenderSearchOptions) : Promise<Nullable<ICustomer>> {
+        let c: ICustomer;
+        if(!options.email && !options.phone){
+            throw new Error('No phone or email defined');
+        }
+        if(options.email){
+            c =  customerData.find(c => c.email === options.email) as ICustomer
+        }else{
+            c =  customerData.find(c => c.phone === options.phone) as ICustomer
+        }
+        return c;
     }
     public static async setCustomer(customer:ICustomer) : Promise<string>{
         customer.id = v4.generate();

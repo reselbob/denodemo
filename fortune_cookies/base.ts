@@ -1,16 +1,21 @@
+import { Nullable } from './nullable.ts';
 import { DataManager } from './data/data_manager.ts';
-import { IFortuneCookie,ICustomer,SendMethod } from './interface.ts';
+import { IFortuneCookie,ICustomer,SendStatus, ISenderSearchOptions } from './interface.ts';
 
 export abstract class FortuneCookieBase implements IFortuneCookie{
     getFortuneSync(): string {
         return DataManager.getFortuneSync()
     }
-    setSender(customer: ICustomer): void {
-
+    async setSender(customer: ICustomer): Promise<string> {
+        return await DataManager.setCustomer(customer);
     }
-    getSender(id: string): ICustomer{
-
+    async getSender(id: string): Promise<ICustomer>{
+        return await DataManager.getCustomer(id)
     }
-    abstract sendFortune(customer: ICustomer, method: SendMethod): void
+
+    async searchSenders(options: ISenderSearchOptions): Promise<Nullable<ICustomer>>{
+        return await DataManager.searchCustomer(options)
+    }
+    abstract sendFortune(customer: ICustomer): Promise<SendStatus>
 
 }
