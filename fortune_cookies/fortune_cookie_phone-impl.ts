@@ -28,6 +28,4 @@ export class FortuneCookiePhoneImpl extends FortuneCookieBase implements IFortun
 
         return SendStatus.OK;
     }
-
-
 }
