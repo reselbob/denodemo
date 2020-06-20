@@ -62,20 +62,13 @@ export namespace PSRedis {
       if (sub) {
         this.subscription = sub;
       } else {
-        throw new Error('No subscriotion invoked.');
+        throw new Error('No subscription invoked.');
       }
 
       (async function () {
-        try{
-          for await (const { channel, message } of sub.receive()) {
-            handler(message);
-          }
-        }catch(err){
-          console.log(err);
+        for await (const { channel, message } of sub.receive()) {
+          handler(message);
         }
-
-
-
       })();
 
       return PubberSubberStatus.OK;

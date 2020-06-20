@@ -5,7 +5,7 @@ docker run -d --hostname rabbithost --name rabbittest -p 15672:15672 -p 5672:567
 
 sleep 25s #yeah, this is a bit long, but that's what it takes
 
-deno test  --allow-net --allow-env
+deno test  --allow-net --allow-env --reload
 
 docker rm -f redistest
 
