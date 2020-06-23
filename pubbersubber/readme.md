@@ -8,7 +8,7 @@ The objective of this project is to demonstrate using [Deno](https://www.deno.la
 
 You create implementations of IPublisher and ISubscriber using the class, [PubberSubberFactory](./types/pubbersubber_factory.ts). PubberSubberFactory implements the [Factory Design Pattern](https://en.wikipedia.org/wiki/Factory_method_pattern).
 
-The current version of the PubberSubber supports [Redis](https://redislabs.com/) and [RabbitMQ](https://www.rabbitmq.com/) messaging technology. Use the `enum` values [BackingService.REDIS](./types/providers/redis.ts) or [BackingService.AMPQ]{(./types/providers/amqp.ts) } when configuring the options that get submitted to the factory.
+The current version of the PubberSubber supports [Redis](https://redislabs.com/) and [RabbitMQ](https://www.rabbitmq.com/) messaging technology. Use the `enum` values [BackingService.REDIS](./types/providers/redis.ts) or [BackingService.AMPQ](./types/providers/amqp.ts) when configuring the options that get submitted to the factory.
 
 The following is an example of how to create a publisher and subscriber that uses Redis:
 
