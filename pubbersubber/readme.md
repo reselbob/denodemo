@@ -29,7 +29,7 @@ const pubfig = new PSRedis.PublisherConfigImpl({
 });
 //create the publisher
 const publisher: IPublisher = await PubberSubberFactory.getPublisher(pubfig);
-const pubConn = await publisher.connect();
+await publisher.connect();
 
 //configure the subscriber
 const subfig = new PSRedis.SubscriberConfigImpl({
@@ -44,7 +44,14 @@ const handler = (message: string) => {
 };
 
 const myMessage = "message." + TestUtils.getRandomString(10);
+//create the subscriber
 const subscriber: ISubscriber = await PubberSubberFactory.getSubscriber(subfig);
-const subConn = await subscriber.connect();
-rslt = await subscriber.subscribe(handler);
+await subscriber.connect();
+await subscriber.subscribe(handler);
+//
+// do other stuff
+//
+//disconnect the subscriber and publisher
+await publisher.disconnect();
+await subscriber.disconnect();
 ```
