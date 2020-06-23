@@ -1,0 +1,50 @@
+# PubberSubber
+
+## Objective
+
+The objective of this project is to demonstrate using [Deno](https://www.deno.land) to implement the [Backing Service Pattern](https://12factor.net/backing-services) as defined by 12 Factor App. PubberSubber abstracts the PubSub pattern under two interfaces [IPublisher](./types/pubbersubber.ts) and [ISubscriber](./types/pubbersubber.ts)
+
+## Usage
+
+You create implementations of IPublisher and ISubscriber using the class, [PubberSubberFactory](./types/pubbersubber_factory.ts). PubberSubberFactory implements the [Factory Design Pattern](https://en.wikipedia.org/wiki/Factory_method_pattern).
+
+The current version of the PubberSubber supports [Redis](https://redislabs.com/) and [RabbitMQ](https://www.rabbitmq.com/) messaging technology. The following is an example of how to create a publisher and subscriber that uses Redis:
+
+```typescript
+import { v4 } from "https://deno.land/std/uuid/mod.ts";
+import {
+  PubberSubberFactory,
+  BackingService,
+  IPublisher,
+  ISubscriber,
+  PubberSubberStatus,
+} from "./types/mod.ts";
+
+//declare the exchange name
+const exchange = "exchange." + v4.generate();
+//configure the publisher
+const pubfig = new PSRedis.PublisherConfigImpl({
+  backingService: BackingService.REDIS,
+  source: exchange,
+});
+//create the publisher
+const publisher: IPublisher = await PubberSubberFactory.getPublisher(pubfig);
+const pubConn = await publisher.connect();
+
+//configure the subscriber
+const subfig = new PSRedis.SubscriberConfigImpl({
+  backingService: BackingService.REDIS,
+  source: exchange,
+});
+
+//create the subscription handler
+const handler = (message: string) => {
+  const id = v4.generate();
+  console.log({ id, message, received: new Date() });
+};
+
+const myMessage = "message." + TestUtils.getRandomString(10);
+const subscriber: ISubscriber = await PubberSubberFactory.getSubscriber(subfig);
+const subConn = await subscriber.connect();
+rslt = await subscriber.subscribe(handler);
+```
