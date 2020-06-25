@@ -7,14 +7,14 @@ import { IPublisher, ISubscriber } from "./pubbersubber.ts";
 export class PubberSubberFactory {
   constructor() {
   }
-  static async getPublisher(config: PSAmpq.PublisherConfigImpl): Promise<IPublisher> {
+  static async getPublisher(config: IPublisherConfig): Promise<IPublisher> {
     let publisher: IPublisher;
     switch (config.backingService) {
       case BackingService.AMPQ:
-        publisher = new PSAmpq.Publisher(config);
+        publisher = new PSAmpq.Publisher(config as PSAmpq.PublisherConfigImpl) ;
         break;
       case BackingService.REDIS:
-        publisher = new PSRedis.Publisher(config);
+        publisher = new PSRedis.Publisher(config as PSRedis.PublisherConfigImpl);
         break;
       default:
         throw new Error(
