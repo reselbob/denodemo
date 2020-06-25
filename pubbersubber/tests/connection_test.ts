@@ -1,7 +1,8 @@
 import { assertEquals, assert } from "https://deno.land/std/testing/asserts.ts";
-import { TestUtils } from './mod.ts';
-import {PubberSubberFactory, IPublisherConfig, ISubscriberConfig, PubberSubberStatus} from '../types/mod.ts'
-import {BackingService} from '../types/mod.ts'
+import { TestUtils } from './test_utils.ts';
+import {PubberSubberStatus} from '../types/enums/pubbersubbser_status.ts'
+import {PubberSubberFactory} from '../types/pubbersubber_factory.ts';
+import {BackingService} from '../types/enums/backing_service.ts';
 import { PSAmpq } from "../types/providers/amqp.ts";
 import { PSRedis } from "../types/providers/redis.ts";
 import { delay } from "https://deno.land/std/async/mod.ts";

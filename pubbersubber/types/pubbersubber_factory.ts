@@ -1,8 +1,10 @@
-import { IPublisherConfig, ISubscriberConfig } from "./mod.ts";
-import { BackingService } from "./backing_service.ts";
+import { IPublisherConfig} from '../types/interfaces/publisher_config.ts' ;
+import  {ISubscriberConfig} from '../types/interfaces/subscriber_config.ts';
+import { BackingService } from "./enums/backing_service.ts";
 import { PSAmpq } from "./providers/amqp.ts";
 import { PSRedis } from "./providers/redis.ts";
-import { IPublisher, ISubscriber } from "./pubbersubber.ts";
+import {IPublisher} from "./interfaces/publisher.ts";
+import {ISubscriber} from "./interfaces/subscriber.ts";
 
 export class PubberSubberFactory {
   constructor() {

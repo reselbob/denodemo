@@ -1,11 +1,11 @@
 import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
-import { TestUtils } from './mod.ts';
-import {} from '../types/mod.ts'
-import {PubberSubberFactory, IPublisherConfig, ISubscriberConfig} from '../types/mod.ts'
-import {BackingService} from '../types/mod.ts'
-import { PSAmpq } from "../types/providers/amqp.ts";
-import { PSRedis } from "../types/providers/redis.ts";
+import { TestUtils } from './test_utils.ts';
+import {PubberSubberFactory} from '../types/pubbersubber_factory.ts';
+import {ISubscriberConfig} from '../types/interfaces/subscriber_config.ts'
+import {BackingService} from '../types/enums/backing_service.ts'
+import  {PSAmpq} from '../types/providers/amqp.ts'
+import {PSRedis}  from "../types/providers/redis.ts";
 
 Deno.test({
     name: "Can Init Redis Publisher from Factory",

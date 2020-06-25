@@ -1,8 +1,11 @@
-import {IPublisher, SubscriberBase} from './../pubbersubber.ts';
-import {PubberSubberBase} from "./../mod.ts";
-import {PubberSubberConfigBase, IPubberSubberConfigBase} from "./../mod.ts";
-import {PubberSubberStatus, ISubscriberConfig} from "./../mod.ts";
-import {Nullable} from "./../mod.ts";
+import {IPublisher} from '../interfaces/publisher.ts';
+import {SubscriberBase} from '../base/subscriber.ts'
+import {PubberSubberBase} from '../base/pubbersubber.ts';
+import {PubberSubberConfigBase} from '../base/pubbersubber_config.ts'
+import {IPubberSubberConfigBase} from '../interfaces/pubbersubber_config_base.ts';
+import {PubberSubberStatus,} from '../enums/pubbersubbser_status.ts';
+import { ISubscriberConfig} from '../interfaces/subscriber_config.ts'
+import {Nullable} from '../nullable.ts';
 
 import {connect, AmqpConnection, AmqpChannel} from "https://deno.land/x/amqp/mod.ts";
 
@@ -44,9 +47,9 @@ export namespace PSAmpq {
             if(!this.connection){
                 this.connection = await connect(uri);
                 this.channel = await this.connection.openChannel();
-                await this.channel.declareExchange({exchange: this.source, type: "fanout"}); 
+                await this.channel.declareExchange({exchange: this.source, type: "fanout"});
             }
-          return PubberSubberStatus.OK;
+            return PubberSubberStatus.OK;
         }
         async disconnect(): Promise<PubberSubberStatus> {
             if (this.connection) {
@@ -61,7 +64,7 @@ export namespace PSAmpq {
         constructor(config: ISubscriberConfig){
             super(config);
             this.queueName = config.queueName;
-            
+
         }
 
         async validate(): Promise<PubberSubberStatus> {
@@ -93,25 +96,25 @@ export namespace PSAmpq {
                 this.channel = await this.connection.openChannel();
                 this.channel.declareQueue({queue: this.queueName, autoDelete: false });
                 //bind it to the exchange
-                await this.channel.bindQueue({ exchange: this.source, queue: this.queueName, routingKey: this.routingKey}); 
+                await this.channel.bindQueue({ exchange: this.source, queue: this.queueName, routingKey: this.routingKey});
             }
             return PubberSubberStatus.OK;
-            
+
         }
 
         async subscribe(handler: Function): Promise<PubberSubberStatus> {
-            if(!this.channel) throw new Error('Channel not initialized');  
+            if(!this.channel) throw new Error('Channel not initialized');
             await  this.channel.consume(
-                    {queue: this.queueName},
-                    async (args, props, data) => {
-                        await handler(args, props, data);
-                        if(this.channel){
-                            await  this.channel.ack({ deliveryTag: args.deliveryTag });
-                        }else{
-                            throw new Error('No channel in force');
-                        }
-                    },
-                );
+                {queue: this.queueName},
+                async (args, props, data) => {
+                    await handler(args, props, data);
+                    if(this.channel){
+                        await  this.channel.ack({ deliveryTag: args.deliveryTag });
+                    }else{
+                        throw new Error('No channel in force');
+                    }
+                },
+            );
             return PubberSubberStatus.OK;
         }
 
