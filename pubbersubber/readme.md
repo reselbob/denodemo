@@ -2,7 +2,7 @@
 
 ## Objective
 
-The objective of this project is to demonstrate using [Deno](https://www.deno.land) to implement the [Backing Service Pattern](https://12factor.net/backing-services) as defined by 12 Factor App. PubberSubber abstracts the PubSub pattern under two interfaces [IPublisher](./types/pubbersubber.ts) and [ISubscriber](./types/pubbersubber.ts)
+The objective of this project is to demonstrate using [Deno](https://www.deno.land) to implement the [Backing Service Pattern](https://12factor.net/backing-services) as defined by 12 Factor App. PubberSubber abstracts the PubSub pattern under two interfaces [IPublisher](./types/interfaces/interfaces/publisher.ts) [ISubscriber](./types/interfaces/interfaces/subscriber.ts)
 
 ## Usage
 
@@ -15,13 +15,11 @@ The following is an example of how to create a publisher and subscriber that use
 ```typescript
 import { v4 } from "https://deno.land/std/uuid/mod.ts";
 import {PSRedis} from "./types/providers/redis.ts";
-import {
-  PubberSubberFactory,
-  BackingService,
-  IPublisher,
-  ISubscriber,
-  PubberSubberStatus,
-} from "./types/mod.ts";
+import {PubberSubberStatus} from './types/enums/pubbersubbser_status.ts'
+import {PubberSubberFactory} from './types/pubbersubber_factory.ts';
+import {BackingService} from './types/enums/backing_service.ts';
+import { PSAmpq } from "./types/providers/amqp.ts";
+import { PSRedis } from "./types/providers/redis.ts";
 
 //declare the exchange name
 const exchange = "exchange." + v4.generate();
