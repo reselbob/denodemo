@@ -4,8 +4,8 @@ import { TestUtils } from './test_utils.ts';
 import {PubberSubberFactory} from '../types/pubbersubber_factory.ts';
 import {ISubscriberConfig} from '../types/interfaces/subscriber_config.ts'
 import {BackingService} from '../types/enums/backing_service.ts'
-import  {PSAmpq} from '../types/providers/amqp.ts'
-import {PSRedis}  from "../types/providers/redis.ts";
+import * as PSAmpq from '../types/providers/amqp/mod.ts';
+import * as PSRedis from '../types/providers/redis/mod.ts';
 
 Deno.test({
     name: "Can Init Redis Publisher from Factory",

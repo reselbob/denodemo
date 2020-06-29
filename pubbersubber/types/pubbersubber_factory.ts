@@ -1,8 +1,8 @@
 import { IPublisherConfig} from '../types/interfaces/publisher_config.ts' ;
 import  {ISubscriberConfig} from '../types/interfaces/subscriber_config.ts';
 import { BackingService } from "./enums/backing_service.ts";
-import { PSAmpq } from "./providers/amqp.ts";
-import { PSRedis } from "./providers/redis.ts";
+import * as PSAmpq from './providers/amqp/mod.ts';
+import * as PSRedis from './providers/redis/mod.ts';
 import {IPublisher} from "./interfaces/publisher.ts";
 import {ISubscriber} from "./interfaces/subscriber.ts";
 

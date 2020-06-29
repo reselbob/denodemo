@@ -3,8 +3,8 @@ import { TestUtils } from './test_utils.ts';
 import {PubberSubberStatus} from '../types/enums/pubbersubbser_status.ts'
 import {PubberSubberFactory} from '../types/pubbersubber_factory.ts';
 import {BackingService} from '../types/enums/backing_service.ts';
-import { PSAmpq } from "../types/providers/amqp.ts";
-import { PSRedis } from "../types/providers/redis.ts";
+import * as PSAmpq from '../types/providers/amqp/mod.ts';
+import * as PSRedis from '../types/providers/redis/mod.ts';
 import { delay } from "https://deno.land/std/async/mod.ts";
 
 Deno.test({
