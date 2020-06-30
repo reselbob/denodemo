@@ -1,1 +1,4 @@
-export enum PubberSubberStatus {    OK,    ERROR}
+export enum PubberSubberStatus {
+    OK,
+    ERROR
+}
