@@ -4,7 +4,6 @@ import {IPubberSubberConfigBase} from '../interfaces/pubbersubber_config_base.ts
 import {PubberSubberStatus} from '../enums/pubbersubbser_status.ts';
 import { v4 } from 'https://deno.land/std/uuid/mod.ts';
 
-
 export abstract class PubberSubberBase implements IPubberSubber {
     backingService: BackingService
     source: string;
@@ -29,8 +28,7 @@ export abstract class PubberSubberBase implements IPubberSubber {
         this.password = config.password;
     }
 
-    async abstract connect(): Promise<PubberSubberStatus>;
+   abstract  async connect(): Promise<PubberSubberStatus>;
 
-    async abstract disconnect(): Promise<PubberSubberStatus>;
-
+    abstract async disconnect(): Promise<PubberSubberStatus>;
 }
