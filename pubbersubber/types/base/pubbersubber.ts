@@ -28,7 +28,7 @@ export abstract class PubberSubberBase implements IPubberSubber {
         this.password = config.password;
     }
 
-   abstract  async connect(): Promise<PubberSubberStatus>;
+    abstract  async connect(): Promise<PubberSubberStatus>;
 
     abstract async disconnect(): Promise<PubberSubberStatus>;
 }
