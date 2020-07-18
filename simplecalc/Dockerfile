@@ -1,13 +1,15 @@
 FROM ubuntu
 
 RUN apt-get update && apt-get install curl zip unzip -y
+RUN mkdir /app
+RUN mkdir /home/deno
 
 ENV HOME /home/deno
-
+RUN groupadd -g 10000 deno
 RUN adduser --uid 1000 --home $HOME --shell /bin/bash --user-group deno
 
-RUN chown -R deno /deno-entrypoint
-RUN chown -R deno /scripts
+RUN chown -R deno /home/deno
+RUN chown -R deno /app
 RUN chmod a+rwx $HOME
 
 USER 1000:1000
