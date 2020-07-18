@@ -15,7 +15,7 @@ Deno.test({
     ignore: false,
     async fn() {
       const result = Calculator.subtract([1, 2, 3]);
-      assertEquals(result, -5);
+      assertEquals(result, -4);
     },
   });
 
