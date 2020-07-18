@@ -13,7 +13,5 @@ before_install:
     - deno run https://deno.land/std/examples/welcome.ts
     
 script: 
-    - cd ./fortune_cookies/test/
-    - sh run_test.sh
-    - cd ../simplecalc/test/
+    - cd ./simplecalc/test/
     - sh run_test.sh
