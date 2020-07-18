@@ -1,3 +1,4 @@
+#!/bin/bash
 cd ..
 base=$PWD
 datadir=$base"/data"
