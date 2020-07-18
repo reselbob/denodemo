@@ -2,6 +2,8 @@ language: node_js
 node_js:
     - 14
 os: ubuntu
+services:
+    - docker
 before_install:
     - pwd
     - curl -fsSL https://deno.land/x/install/install.sh | sh
@@ -12,4 +14,6 @@ before_install:
     
 script: 
     - cd ./fortune_cookies/test/
+    - sh run_test.sh
+    - cd ../simplecalc/test/
     - sh run_test.sh
