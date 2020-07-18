@@ -6,7 +6,7 @@ RUN mkdir /home/deno
 
 ENV HOME /home/deno
 RUN groupadd -g 10000 deno
-RUN adduser --uid 1000 --home $HOME --shell /bin/bash --user-group deno
+RUN adduser --uid 1000 --home $HOME --shell /bin/bash -g deno
 
 RUN chown -R deno /home/deno
 RUN chown -R deno /app
