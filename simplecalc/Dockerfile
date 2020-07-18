@@ -1,5 +1,7 @@
 FROM ubuntu
 
+RUN apt-get update && apt-get install curl
+
 RUN curl -fsSL https://deno.land/x/install/install.sh | sh
 
 ENV DENO_INSTALL /$HOME/.deno
