@@ -11,4 +11,4 @@ before_install:
     - deno run https://deno.land/std/examples/welcome.ts
     
 script: 
-    - sh ./fortune_cookies/run_test.sh
+    - sh ./fortune_cookies/test/run_test.sh
