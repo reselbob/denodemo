@@ -1,7 +1,10 @@
+language: node_js
+node_js:
+    - 14
 os: ubuntu
 before_install:
     - curl -fsSL https://deno.land/x/install/install.sh | sh
-    - deno run https://deno.land/std/examples/welcome.ts
+    - travis_wait 3 deno run https://deno.land/std/examples/welcome.ts
     - pwd
 script: 
     - sh ./fortune_cookies/run_test.sh
