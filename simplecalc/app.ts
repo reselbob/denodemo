@@ -3,7 +3,7 @@ import router from './routes.ts'
 
 let app;
 
-const HOST = '127.0.0.1'
+const HOST = '0.0.0.0'
 const PORT = Deno.env.get("CALCULATOR_PORT") || 7700;
 
 app = new Application();
