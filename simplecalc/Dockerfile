@@ -1,6 +1,6 @@
 FROM ubuntu
 
-RUN apt-get update && apt-get install curl -y
+RUN apt-get update && apt-get install curl zip unzip -y
 
 RUN curl -fsSL https://deno.land/x/install/install.sh | sh
 
