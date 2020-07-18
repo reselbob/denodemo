@@ -1,5 +1,7 @@
 #!/bin/bash
-docker build -t mydenoserver ../Dockerfile
+cd ..
+
+docker build -t mydenoserver .
 docker run -d --name simplecalc -p 7700:7700 mydenoserver
 
 deno test  --allow-net --allow-env --allow-read --allow-write --reload
