@@ -1,5 +1,5 @@
 import { ICustomer } from './../interface.ts';
-import { assertEquals, assertNotEquals } from "https://deno.land/std/testing/asserts.ts";
+import { assertEquals, assertNotEquals } from "https://deno.land/std@0.60.0/testing/asserts.ts";
 import {DataManager} from '../data/data_manager.ts'
 import {TestUtils} from './test_utils.ts'
 

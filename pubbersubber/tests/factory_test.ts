@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.60.0/testing/asserts.ts";
 
 import { TestUtils } from './test_utils.ts';
 import {PubberSubberFactory} from '../types/pubbersubber_factory.ts';

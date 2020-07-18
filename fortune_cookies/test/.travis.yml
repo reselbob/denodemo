@@ -1,0 +1,5 @@
+os: ubuntu
+before_install:
+    - curl -fsSL https://deno.land/x/install/install.sh | sh
+script: 
+    - sh ./fortune_cookies/run_test.sh
