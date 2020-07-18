@@ -3,8 +3,12 @@ node_js:
     - 14
 os: ubuntu
 before_install:
-    - curl -fsSL https://deno.land/x/install/install.sh | sh
-    - travis_wait 3 deno run https://deno.land/std/examples/welcome.ts
     - pwd
+    - curl -fsSL https://deno.land/x/install/install.sh | sh
+    - ls -l $HOME/.deno
+    - export DENO_INSTALL="$HOME/.deno"
+    - export PATH="$DENO_INSTALL/bin:$PATH"
+    - deno run https://deno.land/std/examples/welcome.ts
+    
 script: 
     - sh ./fortune_cookies/run_test.sh
