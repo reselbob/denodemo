@@ -1,6 +1,5 @@
 import { Nullable} from '../nullable.ts';
 import { ICustomer, ISenderSearchOptions } from './../interface.ts';
-import {readFileStrSync} from "https://deno.land/std/fs/read_file_str.ts";
 import {readJson} from "https://deno.land/std/fs/read_json.ts";
 import {writeJson} from "https://deno.land/std/fs/write_json.ts";
 import {EOL} from "https://deno.land/std/fs/eol.ts";
@@ -28,7 +27,8 @@ const customerData: Array<ICustomer> = await getCustomerData();
 
 export class DataManager{
     private getAllFortunesSync(searchTerm?: string): Array<string>{
-        const data = readFileStrSync(dataDir + fortunesFileName, { encoding: "utf8" }) as string
+        const decoder = new TextDecoder('utf-8');
+        const data = decoder.decode(Deno.readFileSync(dataDir + fortunesFileName));
         const result =  data.split(EOL.LF) as Array<string>
         if(searchTerm){
             //TODO some processing

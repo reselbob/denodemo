@@ -1,5 +1,5 @@
 import { Calculator } from "./../calculator.ts";
-import { assertEquals } from "https://deno.land/std@0.60.0/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.61.0/testing/asserts.ts";
 
 Deno.test({
   name: "Can add",
