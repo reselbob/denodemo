@@ -1,9 +1,10 @@
-language: node_js
-node_js:
-    - 14
+language: default
 os: ubuntu
 services:
     - docker
+branches:
+    only:
+    - master
 before_install:
     - pwd
     - curl -fsSL https://deno.land/x/install/install.sh | sh
